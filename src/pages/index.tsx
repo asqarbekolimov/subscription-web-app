@@ -1,13 +1,12 @@
-import { Header, Row } from "@/components";
+import { Header, Hero, Row } from "@/components";
+import { IMovie } from "@/interfaces/app.interface";
 import { API_REQUEST } from "@/services/api.service";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 
-export default function Home(props: HomeProps): JSX.Element {
-  console.log(props);
-
+export default function Home({ trending }: HomeProps): JSX.Element {
   return (
-    <div className="flex min-h-screen flex-col items-center py-2">
+    <div className="relative min-h-screen bg-gradient-to-b from-gray-900/50 to-slate-900">
       <Head>
         <title>Movie App</title>
         <meta name="description" content="" />
@@ -15,8 +14,8 @@ export default function Home(props: HomeProps): JSX.Element {
         <link rel="shortcut icon" href="logo.svg" />
       </Head>
       <Header />
-      <main>
-        {/* hero */}
+      <main className="relative pb-24 pl-4 lg:space-y-24 lg:pl-16">
+        <Hero trending={trending} />
         <section>
           {/* row */}
           {/* bigRow */}
@@ -31,11 +30,11 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
 
   return {
     props: {
-      trending: trending,
+      trending: trending.results,
     },
   };
 };
 
 interface HomeProps {
-  trending: any;
+  trending: IMovie[];
 }
