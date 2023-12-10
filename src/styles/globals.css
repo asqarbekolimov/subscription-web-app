@@ -5,7 +5,7 @@
 /* html body */
 @layer base {
   body {
-    @apply bg-slate-950 text-white;
+    @apply !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-slate-500 bg-slate-950 text-white;
   }
 
   header {

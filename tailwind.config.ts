@@ -15,6 +15,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-textshadow")],
+  plugins: [
+    require("tailwindcss-textshadow"),
+    require("tailwind-scrollbar-hide"),
+    require("tailwind-scrollbar"),
+  ],
 };
 export default config;
