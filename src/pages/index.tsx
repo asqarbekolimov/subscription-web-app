@@ -29,7 +29,7 @@ export default function Home({
           <Row title="Popular" movies={popular} />
           <Row title="Top Rated" movies={topRated} />
           <Row title="TV Show" movies={tvTopRated} isBig={true} />
-          <Row title="Documentary" movies={documentary.reverse()} />
+          <Row title="Documentary" movies={documentary} />
           <Row title="Family" movies={family} isBig={true} />
           <Row title="Comedy" movies={comedy.reverse()} />
           <Row title="History" movies={history} isBig={true} />
