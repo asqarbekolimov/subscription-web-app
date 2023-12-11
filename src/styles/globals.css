@@ -5,7 +5,7 @@
 /* html body */
 @layer base {
   body {
-    @apply !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-slate-500 bg-slate-950 text-white;
+    @apply bg-slate-950 text-white !scrollbar-thin !scrollbar-track-transparent !scrollbar-thumb-slate-500;
   }
 
   header {
@@ -16,5 +16,8 @@
 @layer components {
   .navLink {
     @apply cursor-pointer text-sm font-light text-[#fff] hover:text-[#b3b3b3];
+  }
+  .input {
+    @apply w-full rounded bg-[#333] px-5 py-4 placeholder-[gray] outline-none focus:bg-[#454545];
   }
 }
