@@ -2,7 +2,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged,
   User,
 } from "firebase/auth";
 import { auth } from "@/firebase";
@@ -51,5 +50,14 @@ export const useAuth = () => {
       .finally(() => setIsLoading(false));
   };
 
-  return { error, isLoading, user, signIn, signUp, logOut };
+  return {
+    error,
+    isLoading,
+    user,
+    signIn,
+    signUp,
+    logOut,
+    setUser,
+    setIsLoading,
+  };
 };

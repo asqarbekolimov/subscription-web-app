@@ -1,11 +1,17 @@
+import { AuthContext } from "@/context/auth.context";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
+import { useContext, useEffect, useState } from "react";
+import {
+  AiOutlineLogout,
+  AiOutlineSearch,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { BiBellMinus } from "react-icons/bi";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { logOut } = useContext(AuthContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +28,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className={`${scrolled && "bg-slate-900/50 backdrop-blur shadow"}`}>
+    <header className={`${scrolled && "bg-slate-900/50 shadow backdrop-blur"}`}>
       <div className="flex items-center space-x-2 md:space-x-10">
         <Image
           src={"/logo.svg"}
@@ -32,7 +38,7 @@ const Header = () => {
           className={"cursor-pointer object-contain"}
         />
 
-        <ul className="space-x-4 md:flex hidden">
+        <ul className="hidden space-x-4 md:flex">
           <li className="navLink">Home</li>
           <li className="navLink">Movies</li>
           <li className="navLink">TV Shows</li>
@@ -48,6 +54,7 @@ const Header = () => {
         <Link href={"/account"}>
           <AiOutlineUser className="h-6 w-6 cursor-pointer" />
         </Link>
+        <AiOutlineLogout onClick={logOut} className="h-6 w-6 cursor-pointer" />
       </div>
     </header>
   );

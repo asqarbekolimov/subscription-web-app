@@ -8,7 +8,8 @@ import * as Yup from "yup";
 
 const Auth = () => {
   const [auth, setAuth] = useState<"signup" | "signin">("signin");
-  const { error, isLoading, logOut, signIn, signUp } = useContext(AuthContext);
+  const { error, isLoading, logOut, signIn, signUp, user } =
+    useContext(AuthContext);
 
   const toggleAuth = (state: "signup" | "signin") => {
     setAuth(state);
