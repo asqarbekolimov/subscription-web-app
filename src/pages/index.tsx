@@ -20,9 +20,6 @@ export default function Home({
   const { setModal, modal } = useInfoStore();
   const { isLoading } = useContext(AuthContext);
   if (isLoading) return <>{null}</>;
-
-  console.log(modal);
-
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900/50 to-slate-900">
       <Head>
