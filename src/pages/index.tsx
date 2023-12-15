@@ -2,6 +2,7 @@ import { Header, Hero, Row } from "@/components";
 import { AuthContext } from "@/context/auth.context";
 import { IMovie } from "@/interfaces/app.interface";
 import { API_REQUEST } from "@/services/api.service";
+import { useInfoStore } from "@/store";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useContext } from "react";
@@ -16,8 +17,12 @@ export default function Home({
   family,
   history,
 }: HomeProps): JSX.Element {
+  const { setModal, modal } = useInfoStore();
   const { isLoading } = useContext(AuthContext);
   if (isLoading) return <>{null}</>;
+
+  console.log(modal);
+
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-gray-900/50 to-slate-900">
       <Head>
