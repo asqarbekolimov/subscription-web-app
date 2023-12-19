@@ -1,11 +1,31 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { PlanCardProps } from "./plan-card.props";
 import Image from "next/image";
 import { RiVipCrown2Line } from "react-icons/ri";
 import { AiOutlineHourglass, AiOutlineVideoCameraAdd } from "react-icons/ai";
+import { AuthContext } from "@/context/auth.context";
 
 const PlanCard = ({ product }: PlanCardProps) => {
+  const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const onSubmitSubscription = async (priceId: string) => {
+    setIsLoading(true);
+    try {
+      const payload = { priceId, email: user?.email };
+      const response = await fetch("/api/subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      window.open(data.subscription.url);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -30,8 +50,12 @@ const PlanCard = ({ product }: PlanCardProps) => {
           <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full rounded-xl bg-black/20"></div>
         </div>
         <div className="mt-4 border-[1px] border-white/20" />
-        <button className="mt-4 w-full rounded bg-[#E10856] py-4 font-semibold hover:opacity-80">
-          Buy Plan
+        <button
+          onClick={() => onSubmitSubscription(product.default_price.id)}
+          className="mt-4 w-full rounded bg-[#E10856] py-4 font-semibold hover:opacity-80"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : "Buy Plan"}
         </button>
         <div className="my-4 flex flex-col space-y-2">
           {product.metadata.adv.split(", ").map((c, id) => (
