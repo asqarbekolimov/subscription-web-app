@@ -1,6 +1,7 @@
 import { TextField } from "@/components";
 import { useAuth } from "@/hooks/useAuth";
 import { Form, Formik } from "formik";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -122,3 +123,17 @@ const Auth = () => {
 };
 
 export default Auth;
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const user_id = req.cookies.user_id;
+
+  if (user_id) {
+    return {
+      redirect: { destination: "/", permanent: false },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};

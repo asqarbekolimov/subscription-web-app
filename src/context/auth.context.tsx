@@ -46,12 +46,10 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     () =>
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          setIsLoading(false);
           setUser(user);
           router.push("/");
         } else {
           setUser(null);
-          setIsLoading(true);
           router.push("/auth");
         }
         setIsLoading(false);
