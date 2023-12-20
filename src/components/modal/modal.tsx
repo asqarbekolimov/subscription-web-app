@@ -1,18 +1,25 @@
 import { useInfoStore } from "@/store";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { FaPause, FaPlay, FaTimes } from "react-icons/fa";
 import { Element } from "@/interfaces/app.interface";
 import ReactPlayer from "react-player";
 import { BiPlus, BiSolidVolumeMute } from "react-icons/bi";
 import { BsVolumeDown } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase";
+import { AuthContext } from "@/context/auth.context";
+import { useRouter } from "next/router";
 
 export default function Modal() {
   const { modal, setModal, currentMovie } = useInfoStore();
   const [trailer, setTrailer] = useState<string>("");
   const [muted, setMuted] = useState<boolean>(true);
   const [playing, setPlaying] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
 
   const base_url = process.env.NEXT_PUBLIC_API_DOMAIN as string;
   const api_key = process.env.NEXT_PUBLIC_API_KEY as string;
@@ -34,6 +41,21 @@ export default function Modal() {
     };
     fetchVideoData();
   }, [currentMovie]);
+
+  const addProductList = async () => {
+    setIsLoading(true);
+    try {
+      await addDoc(collection(db, "list"), {
+        userId: user?.uid,
+        list: currentMovie,
+      });
+      setIsLoading(false);
+      router.replace(router.asPath);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
 
   function closeModal() {
     setModal(false);
@@ -100,8 +122,11 @@ export default function Modal() {
                             </>
                           )}
                         </button>
-                        <button className="modalButton">
-                          <BiPlus />
+                        <button
+                          onClick={addProductList}
+                          className="modalButton"
+                        >
+                          {isLoading ? "..." : <BiPlus />}
                         </button>
 
                         <button className="modalButton">
